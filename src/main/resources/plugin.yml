@@ -1,0 +1,34 @@
+name: AmarradosRevive
+version: '${project.version}'
+main: com.amarrados.revive.RevivePlugin
+api-version: '1.21'
+author: AmarradosYSinPlan
+description: Sistema de derribo y revivir. Reemplaza a PlayerRevive.
+softdepend: [LuckPerms]
+
+commands:
+  revive:
+    description: Administra a los jugadores derribados.
+    usage: /revive ayuda
+    aliases: [revivir, playerrevive]
+  rendirse:
+    description: Te rindes y mueres si estas derribado.
+    usage: /rendirse
+    aliases: [giveup, morir]
+
+permissions:
+  amarradosrevive.revivir:
+    description: Revivir a jugadores derribados (agachandose a su lado).
+    default: true
+  amarradosrevive.rendirse:
+    description: Usar /rendirse estando derribado.
+    default: true
+  amarradosrevive.admin:
+    description: /revive revivir, matar, lista y recargar.
+    default: op
+    children:
+      amarradosrevive.revivir: true
+      amarradosrevive.rendirse: true
+  amarradosrevive.exento:
+    description: Nunca queda derribado (muere normal). No se da a los OP automaticamente.
+    default: false

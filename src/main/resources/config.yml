@@ -1,0 +1,100 @@
+# ============================================================
+#  AmarradosRevive - configuracion
+#  Colores con & (por ejemplo &c rojo, &a verde, &e amarillo).
+# ============================================================
+
+# No tocar.
+config-version: 1
+
+prefijo: "&8[&cRevive&8] &7"
+
+derribado:
+  # Segundos que tiene el jugador derribado antes de morir del todo.
+  segundos-para-morir: 60
+  # Vida que se le deja al quedar derribado (1.0 = medio corazon).
+  vida: 1.0
+  # Multiplicador de velocidad mientras esta derribado (ademas de ir arrastrandose).
+  velocidad: 0.6
+  # Ponerlo en pose de arrastrarse (para el y para los demas).
+  arrastrarse: true
+  # Puede saltar estando derribado.
+  puede-saltar: false
+  # Efecto de brillo para encontrarlo (se ve a traves de las paredes).
+  brillar: false
+  # Los mobs dejan de atacar a los derribados.
+  mobs-ignoran: true
+  # Mientras esta derribado no recibe daño. Si pones un numero mayor que 0,
+  # cada golpe de un mob o jugador le quita esos segundos de vida restante.
+  segundos-por-golpe: 0
+  # Si se desconecta derribado, muere. Si es false, al volver sigue derribado
+  # con el tiempo que le quedaba.
+  morir-al-desconectar: true
+  # Un golpe con este daño (o mas) mata directamente, sin derribar.
+  # Lo usan /kill y la "vida compartida" de AmarradosCadenas (cuando uno muere
+  # de verdad, los demas mueren con 1000 de daño). Pon 0 para desactivarlo.
+  dano-muerte-directa: 1000
+  # Causas de daño que matan directamente, sin derribar.
+  causas-muerte-directa: [VOID, KILL, SUICIDE, WORLD_BORDER]
+  # Mundos donde no existe el derribo (se muere normal).
+  mundos-desactivados: []
+  # Comandos que no puede usar estando derribado (sin la barra).
+  comandos-bloqueados: [spawn, home, homes, tpa, tpahere, tpaccept, tpyes, warp, back, rtp, wild, hub, lobby]
+
+# Que NO puede hacer un jugador derribado (true = bloqueado).
+bloquear:
+  poner-bloques: true
+  romper-bloques: true
+  interactuar: true        # abrir cofres, puertas, usar objetos, etc.
+  atacar: true
+  comer-beber: true
+  disparar: true           # arcos, perlas, tridentes, pociones arrojadizas...
+  montar: true             # caballos, barcos, vagonetas
+  planear-elytra: true
+
+revivir:
+  # Para revivir: agacharse (shift) al lado del jugador derribado durante X segundos.
+  segundos: 5
+  # Distancia maxima (bloques) para revivir.
+  distancia: 2.0
+  # Mientras alguien le revive, su tiempo para morir se pausa.
+  pausar-tiempo: true
+  # Si el que revive se aleja o se levanta, el progreso vuelve a 0.
+  # Si es false, el progreso baja poco a poco.
+  reiniciar-progreso: true
+  # Vida con la que se levanta.
+  vida: 6.0
+  # Segundos sin recibir daño justo despues de levantarse.
+  segundos-proteccion: 2
+
+avisos:
+  # Mensaje en el chat para todos cuando alguien es derribado / revivido / muere desangrado.
+  chat: true
+  # A los jugadores que esten a esta distancia se les avisa (barra de accion)
+  # de que hay alguien derribado. 0 = desactivado.
+  distancia-aviso-cercanos: 12
+  sonidos: true
+
+# Al entrar, si un jugador en supervivencia/aventura tiene la marca de
+# "invulnerable" puesta (bug tipico de otros plugins de revivir), se le quita.
+corregir-jugadores-inmortales: true
+
+mensajes:
+  derribado-titulo: "&c¡Estas derribado!"
+  derribado-subtitulo: "&7Espera a que alguien te reviva"
+  barra-tiempo: "&c☠ Te desangras: &f{tiempo}"
+  barra-tiempo-pausado: "&e☠ Tiempo pausado: &f{tiempo}"
+  barra-reviviendo: "&a✚ {reviviendo} te esta reviviendo... &f{progreso}%"
+  accion-reviviendo-a-ti: "&a✚ &f{reviviendo} &ate esta reviviendo &7(&f{progreso}%&7)"
+  accion-revivir-otro: "&a✚ Reviviendo a &f{jugador} &7[{barra}&7] &f{progreso}%"
+  accion-aviso-cercano: "&c☠ &f{jugador} &cesta derribado &7(&f{tiempo}&7) - &eagachate a su lado para revivirlo"
+  revivido-titulo: "&a¡Te han revivido!"
+  revivido-subtitulo: "&7{reviviendo} te ha levantado"
+  chat-derribado: "&c☠ &f{jugador} &7ha sido derribado. ¡Agachate a su lado para revivirlo!"
+  chat-revivido: "&a✚ &f{reviviendo} &7ha revivido a &f{jugador}&7."
+  muerte-desangrado: "{jugador} se desangro"
+  muerte-desangrado-por: "{jugador} se desangro tras ser derribado por {asesino}"
+  muerte-rendido: "{jugador} se rindio"
+  muerte-desconectado: "{jugador} se desconecto estando derribado"
+  no-derribado: "No estas derribado."
+  accion-bloqueada: "&cNo puedes hacer eso estando derribado."
+  comando-bloqueado: "&cNo puedes usar ese comando estando derribado."
