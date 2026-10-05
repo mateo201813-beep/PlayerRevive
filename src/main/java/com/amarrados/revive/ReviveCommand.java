@@ -38,7 +38,7 @@ public final class ReviveCommand implements TabExecutor {
                 Msg.send(p, plugin.settings().msg("no-derribado"));
                 return true;
             }
-            downed.kill(p, "muerte-rendido");
+            downed.kill(p, "muerte-rendido", plugin.settings().killChainTeamOnGiveUp);
             return true;
         }
 
@@ -76,7 +76,7 @@ public final class ReviveCommand implements TabExecutor {
                     downed.revive(target, sender instanceof Player p ? p : null);
                     Msg.send(sender, "&a" + target.getName() + " ha sido revivido.");
                 } else {
-                    downed.kill(target, "muerte-desangrado");
+                    downed.kill(target, "muerte-desangrado", true);
                     Msg.send(sender, "&c" + target.getName() + " ha muerto.");
                 }
             }
@@ -99,7 +99,7 @@ public final class ReviveCommand implements TabExecutor {
             default -> {
                 Msg.raw(sender, "&6AmarradosRevive &7- comandos:");
                 Msg.raw(sender, "&e/revive revivir <jugador> &7- levanta a un derribado");
-                Msg.raw(sender, "&e/revive matar <jugador> &7- mata a un derribado");
+                Msg.raw(sender, "&e/revive matar <jugador> &7- mata a un derribado (y a su equipo encadenado)");
                 Msg.raw(sender, "&e/revive derribar <jugador> &7- derriba a alguien (para probar)");
                 Msg.raw(sender, "&e/revive lista &7- quien esta derribado");
                 Msg.raw(sender, "&e/revive recargar &7- recarga config.yml");

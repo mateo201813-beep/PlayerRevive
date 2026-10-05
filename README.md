@@ -36,7 +36,13 @@ un estado "derribado" que nunca se borra. Este plugin:
 
 ## Compatibilidad con tus plugins
 
-- **AmarradosCadenas**: funciona igual que con PlayerRevive. El golpe mortal se cancela,
+- **AmarradosCadenas**:
+  - **Si a un derribado se le acaba el tiempo, mueren todos los de su cadena** (también si
+    usa `/rendirse` o un admin usa `/revive matar`). La cadena **no se rompe**: al reaparecer,
+    cada uno aparece junto al primer compañero vivo y siguen encadenados. Se puede desactivar
+    en `cadenas.morir-todo-el-equipo`. Necesita la versión de AmarradosCadenas con `CadenasAPI`
+    (la que tiene `/cadena matar` y `reaparecer-juntos`); con una más vieja solo muere el derribado.
+  - Funciona igual que con PlayerRevive. El golpe mortal se cancela,
   así que con *vida compartida* el resto del equipo no muere cuando uno cae derribado.
   Si el derribado **muere de verdad**, AmarradosCadenas mata al resto con 1000 de daño y ese golpe
   (`dano-muerte-directa: 1000`) les mata directamente, como antes ("si uno muere, mueren todos").

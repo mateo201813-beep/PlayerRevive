@@ -42,6 +42,9 @@ public final class Settings {
     final double reviveHealth;
     final int protectionTicks;
 
+    final boolean killChainTeam;
+    final boolean killChainTeamOnGiveUp;
+
     final boolean chat;
     final double hintDistance;
     final boolean sounds;
@@ -90,6 +93,9 @@ public final class Settings {
         resetProgress = c.getBoolean("revivir.reiniciar-progreso", true);
         reviveHealth = Math.max(0.5, c.getDouble("revivir.vida", 6.0));
         protectionTicks = Math.max(0, c.getInt("revivir.segundos-proteccion", 2)) * 20;
+
+        killChainTeam = c.getBoolean("cadenas.morir-todo-el-equipo", true);
+        killChainTeamOnGiveUp = c.getBoolean("cadenas.tambien-al-rendirse", true);
 
         chat = c.getBoolean("avisos.chat", true);
         hintDistance = Math.max(0, c.getDouble("avisos.distancia-aviso-cercanos", 12));

@@ -51,6 +51,7 @@ public final class DownedManager {
     private static final BlockData BARRIER = Material.BARRIER.createBlockData();
 
     private final RevivePlugin plugin;
+    private final ChainHook chain;
     private final Map<UUID, DownedState> states = new HashMap<>();
     /** Mensaje de muerte a poner cuando muere por el plugin (desangrado, rendido...). */
     private final Map<UUID, String> deathMessages = new HashMap<>();
@@ -64,6 +65,7 @@ public final class DownedManager {
         this.speedKey = new NamespacedKey(plugin, "derribado_velocidad");
         this.jumpKey = new NamespacedKey(plugin, "derribado_salto");
         this.pdcKey = new NamespacedKey(plugin, "derribado_ticks");
+        this.chain = new ChainHook(plugin.getLogger());
     }
 
     private Settings s() {
@@ -185,8 +187,15 @@ public final class DownedManager {
 
     // ------------------------------------------------------------------ morir
 
-    /** Mata al jugador derribado de verdad. messageKey: clave de mensajes.* para el mensaje de muerte. */
     void kill(Player p, String messageKey) {
+        kill(p, messageKey, false);
+    }
+
+    /**
+     * Mata al jugador derribado de verdad. messageKey: clave de mensajes.* para el mensaje de muerte.
+     * withTeam: si esta encadenado (AmarradosCadenas), muere tambien todo su equipo.
+     */
+    void kill(Player p, String messageKey, boolean withTeam) {
         DownedState state = states.get(p.getUniqueId());
         String attacker = state == null ? null : state.attackerName;
         if (state != null) {
@@ -206,6 +215,34 @@ public final class DownedManager {
         } finally {
             // Si otro plugin cancelo la muerte, el jugador simplemente sigue vivo (ya no esta derribado).
             deathMessages.remove(p.getUniqueId());
+        }
+        if (withTeam && s().killChainTeam && p.isDead()) {
+            killChainTeam(p);
+        }
+    }
+
+    /** Mata a todos los encadenados con el (la cadena se mantiene al reaparecer). */
+    private void killChainTeam(Player source) {
+        List<UUID> members = chain.teamMembers(source.getUniqueId());
+        if (members.size() < 2) {
+            return;
+        }
+        List<UUID> tagged = new ArrayList<>();
+        for (UUID id : members) {
+            Player o = Bukkit.getPlayer(id);
+            if (o != null && o != source && !o.isDead()) {
+                deathMessages.put(id, Msg.fill(s().msg("muerte-equipo"),
+                        "jugador", o.getName(), "companero", source.getName()));
+                tagged.add(id);
+            }
+        }
+        if (tagged.isEmpty()) {
+            return;
+        }
+        try {
+            chain.killTeam(source);
+        } finally {
+            tagged.forEach(deathMessages::remove);
         }
     }
 
@@ -343,13 +380,13 @@ public final class DownedManager {
             }
             int hardLimit = state.totalTicks * 2 + st.reviveTicks + 200;
             if (state.ticksLeft <= 0 || state.ticksDowned > hardLimit) {
-                kill(p, "muerte-desangrado");
+                kill(p, "muerte-desangrado", true);
                 continue;
             }
 
             // --- estado del jugador
             if (p.getHealth() <= 0) {
-                kill(p, "muerte-desangrado");
+                kill(p, "muerte-desangrado", true);
                 continue;
             }
             if (p.isInsideVehicle() && st.blockMount) {

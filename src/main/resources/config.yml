@@ -66,6 +66,15 @@ revivir:
   # Segundos sin recibir daño justo despues de levantarse.
   segundos-proteccion: 2
 
+# Integracion con AmarradosCadenas.
+cadenas:
+  # Si a un jugador derribado se le acaba el tiempo, mueren TODOS los de su cadena
+  # (aunque esten vivos o derribados). La cadena se mantiene y al reaparecer
+  # vuelven a estar juntos (opcion reaparecer-juntos de AmarradosCadenas).
+  morir-todo-el-equipo: true
+  # Lo mismo cuando usa /rendirse (si no, rendirse seria una forma de salvar al equipo).
+  tambien-al-rendirse: true
+
 avisos:
   # Mensaje en el chat para todos cuando alguien es derribado / revivido / muere desangrado.
   chat: true
@@ -93,6 +102,7 @@ mensajes:
   chat-revivido: "&a✚ &f{reviviendo} &7ha revivido a &f{jugador}&7."
   muerte-desangrado: "{jugador} se desangro"
   muerte-desangrado-por: "{jugador} se desangro tras ser derribado por {asesino}"
+  muerte-equipo: "{jugador} murio junto a {companero}, su compañero de cadena"
   muerte-rendido: "{jugador} se rindio"
   muerte-desconectado: "{jugador} se desconecto estando derribado"
   no-derribado: "No estas derribado."

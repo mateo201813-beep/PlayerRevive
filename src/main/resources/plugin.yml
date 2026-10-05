@@ -4,7 +4,7 @@ main: com.amarrados.revive.RevivePlugin
 api-version: '1.21'
 author: AmarradosYSinPlan
 description: Sistema de derribo y revivir. Reemplaza a PlayerRevive.
-softdepend: [LuckPerms]
+softdepend: [LuckPerms, AmarradosCadenas]
 
 commands:
   revive:
